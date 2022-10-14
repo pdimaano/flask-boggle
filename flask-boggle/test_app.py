@@ -1,4 +1,5 @@
 from unittest import TestCase
+# from flask import loads
 
 from app import app, games
 
@@ -23,10 +24,8 @@ class BoggleAppTestCase(TestCase):
 
         with self.client as client:
             response = client.get('/')
-            ...
             # test that you're getting a template
             html = response.get_data(as_text=True)
-            #test status code
             self.assertEqual(response.status_code, 200)
             self.assertIn('<!-- THIS IS UNIQUE - SPENCER,PHIL -->', html)
 
@@ -34,5 +33,19 @@ class BoggleAppTestCase(TestCase):
         """Test starting a new game."""
 
         with self.client as client:
-            ...
-            # write a test for this route
+            response = client.post('/api/new-game')
+            newgame_data = response.get_json()
+            self.assertTrue(isinstance(newgame_data["gameId"], str))
+            self.assertEqual(self.is_list_of_lists(newgame_data["board"]), True)
+
+    def is_list_of_lists(self, board):
+        """Check if new board created is a list of lists"""
+
+        if not (isinstance(board, list)):
+            return False
+        else:
+            for lst in board:
+                if not (isinstance(lst, list)):
+                    return False
+
+            return True
