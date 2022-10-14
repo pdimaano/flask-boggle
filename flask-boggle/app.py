@@ -28,3 +28,27 @@ def new_game():
     games[game_id] = game
 
     return jsonify({"gameId": game_id, "board": real_board})
+
+@app.post("/api/score-word")
+def score_word():
+    response = request.json
+    word_guess = response["wordInput"] #future key name
+    game_id = response["gameId"] #future key name
+    curr_game = games[game_id]
+
+    #should be in the word list
+    if not curr_game.is_word_in_word_list(word_guess):
+        return jsonify({"result": "not-word"})
+    #should be findable on the board
+    if not curr_game.check_word_on_board(word_guess):
+        return jsonify({"result": "not-on-board"})
+    #return a JSON response
+    return jsonify({"result": "ok"})
+
+
+#[
+			# "L","B","O","N","P"
+	        # "O","A","E","O","L"
+		    # "O","R","F","N","Y"
+			# "U","S","W","L","A"
+			# "I","D","E","G","B"
