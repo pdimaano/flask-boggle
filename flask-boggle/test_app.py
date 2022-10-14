@@ -26,7 +26,9 @@ class BoggleAppTestCase(TestCase):
             ...
             # test that you're getting a template
             html = response.get_data(as_text=True)
-            self.assertIn('<table class="board">', html)
+            #test status code
+            self.assertEqual(response.status_code, 200)
+            self.assertIn('<!-- THIS IS UNIQUE - SPENCER,PHIL -->', html)
 
     def test_api_new_game(self):
         """Test starting a new game."""
