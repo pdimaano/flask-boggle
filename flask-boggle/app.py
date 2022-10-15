@@ -24,6 +24,43 @@ def new_game():
     # get a unique string id for the board we're creating
     game_id = str(uuid4())
     game = BoggleGame()
+    game.board = [
+		[
+			"E",
+			"I",
+			"T",
+			"E",
+			"R"
+		],
+		[
+			"R",
+			"F",
+			"A",
+			"A",
+			"P"
+		],
+		[
+			"E",
+			"K",
+			"I",
+			"A",
+			"E"
+		],
+		[
+			"Y",
+			"V",
+			"H",
+			"D",
+			"O"
+		],
+		[
+			"I",
+			"I",
+			"S",
+			"S",
+			"R"
+		]
+	]
     real_board = game.board
     games[game_id] = game
 
@@ -38,7 +75,7 @@ def score_word():
 
     response = request.json
     word_guess = response["wordInput"]
-    game_id = response["gameId"] 
+    game_id = response["gameId"]
     curr_game = games[game_id]
 
     if not curr_game.is_word_in_word_list(word_guess):

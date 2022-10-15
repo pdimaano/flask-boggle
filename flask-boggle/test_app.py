@@ -35,8 +35,20 @@ class BoggleAppTestCase(TestCase):
         with self.client as client:
             response = client.post('/api/new-game')
             newgame_data = response.get_json()
-            resp = client.post('/api/score-word',
-                                json={''})
+            resp1 = client.post('/api/score-word',
+                                json={'gameId':newgame_data['gameId'],
+                                'wordInput':'RAP'})
+            json_response1 = resp1.get_json()
+            resp2 = client.post('/api/score-word',
+                                json={'gameId':newgame_data['gameId'],
+                                'wordInput':'XAP'})
+            json_response2 = resp2.get_json()
+            resp3 = client.post('/api/score-word',
+                                json={'gameId':newgame_data['gameId'],
+                                'wordInput':'rap'})
+            json_response3 = resp3.get_json()
+            # Three separate arretEqual tests
+
 
     #     def test_color_submit_json(self):
     #     """test an AJAX request sending JSON to a server"""
