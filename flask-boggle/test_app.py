@@ -29,6 +29,25 @@ class BoggleAppTestCase(TestCase):
             self.assertEqual(response.status_code, 200)
             self.assertIn('<!-- THIS IS UNIQUE - SPENCER,PHIL -->', html)
 
+    def test_api_score_word(self):
+        """Test scoring a word guess."""
+
+        with self.client as client:
+            response = client.post('/api/new-game')
+            newgame_data = response.get_json()
+            resp = client.post('/api/score-word',
+                                json={''})
+
+    #     def test_color_submit_json(self):
+    #     """test an AJAX request sending JSON to a server"""
+
+    #     with app.test_client() as client:
+    #   resp = client.post('/fav-color',
+    #                     json={'color': 'blue'})
+    #   json_response = resp.get_json()
+
+    #   self.assertEqual({'message': 'blue is best!'}, json_response)
+
     def test_api_new_game(self):
         """Test starting a new game."""
 

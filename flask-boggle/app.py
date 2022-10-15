@@ -31,24 +31,18 @@ def new_game():
 
 @app.post("/api/score-word")
 def score_word():
+    """Receives a JSON object with word input and game id
+    Returns a JSON object indicating whether the word is in the
+    word list and/or not on the game board.
+    """
+
     response = request.json
-    word_guess = response["wordInput"] #future key name
-    game_id = response["gameId"] #future key name
+    word_guess = response["wordInput"]
+    game_id = response["gameId"] 
     curr_game = games[game_id]
 
-    #should be in the word list
     if not curr_game.is_word_in_word_list(word_guess):
         return jsonify({"result": "not-word"})
-    #should be findable on the board
     if not curr_game.check_word_on_board(word_guess):
         return jsonify({"result": "not-on-board"})
-    #return a JSON response
     return jsonify({"result": "ok"})
-
-
-#[
-			# "L","B","O","N","P"
-	        # "O","A","E","O","L"
-		    # "O","R","F","N","Y"
-			# "U","S","W","L","A"
-			# "I","D","E","G","B"
